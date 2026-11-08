@@ -1,21 +1,19 @@
 (() => {
-  const body = document.body;
-  const switcher = document.querySelector('.lang-switch');
-  const savedLanguage = localStorage.getItem('preferred-language');
-  const initialLanguage = savedLanguage || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en');
+  const links = document.querySelectorAll('[data-language]');
 
-  function setLanguage(language) {
-    const isEnglish = language === 'en';
-    body.dataset.lang = language;
-    document.documentElement.lang = isEnglish ? 'en' : 'zh-CN';
-    document.title = isEnglish ? 'Kailin Pang · Personal Homepage' : '庞凯琳 · 个人主页';
-    switcher.textContent = isEnglish ? '中文' : 'EN';
-    switcher.setAttribute('aria-label', isEnglish ? '切换至中文' : 'Switch to English');
-    switcher.setAttribute('aria-pressed', String(isEnglish));
-    localStorage.setItem('preferred-language', language);
+  function updateLanguage() {
+    const language = new URLSearchParams(location.search).get('lang') === 'zh' ? 'zh' : 'en';
+    document.body.dataset.lang = language;
+    document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+    document.title = language === 'zh' ? '庞凯琳 · 学术主页' : 'Kailin Pang — Academic Homepage';
+    for (const link of links) {
+      if (link.dataset.language === language) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+      link.href = '?lang=' + link.dataset.language + location.hash;
+    }
   }
 
-  setLanguage(initialLanguage);
-  switcher.addEventListener('click', () => setLanguage(body.dataset.lang === 'zh' ? 'en' : 'zh'));
+  updateLanguage();
+  window.addEventListener('hashchange', updateLanguage);
   document.querySelector('#year').textContent = new Date().getFullYear();
 })();

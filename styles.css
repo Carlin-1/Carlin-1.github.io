@@ -47,6 +47,7 @@ h3 { font-size: 1.16rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; margin-top: 1rem; }
 .button { font-weight: 650; font-size: .88rem; }
 .profile-name { font-size: 1.28rem; font-weight: 700; margin-bottom: .35rem; }
+.profile-photo { display: block; width: min(100%, 9rem); height: auto; margin: 0 0 1rem; border-radius: .4rem; }
 .profile-name span { display: block; margin-top: .3rem; font-size: .95rem; }
 .profile-card p.muted { font-size: .85rem; }
 dl { margin: 1rem 0 0; }
